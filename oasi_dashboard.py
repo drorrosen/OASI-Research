@@ -9,6 +9,7 @@ import statsmodels.api as sm
 import patsy
 from scipy.stats import chi2_contingency, fisher_exact, chi2
 from collections import defaultdict
+import hashlib
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -143,6 +144,81 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+# Authentication system
+def check_password():
+    """Returns `True` if the user had the correct password."""
+    
+    def password_entered():
+        """Checks whether a password entered by the user is correct."""
+        # Define authorized users (in production, store these securely)
+        authorized_users = {
+            "researcher": "oasiresearch2025",
+        }
+        
+        username = st.session_state["username"]
+        password = st.session_state["password"]
+        
+        if username in authorized_users and authorized_users[username] == password:
+            st.session_state["password_correct"] = True
+            st.session_state["current_user"] = username
+            del st.session_state["password"]  # Don't store password
+        else:
+            st.session_state["password_correct"] = False
+
+    # Return True if password is validated
+    if st.session_state.get("password_correct", False):
+        return True
+
+    # Show login form
+    st.markdown("""
+    <div style="max-width: 400px; margin: 5rem auto; padding: 2rem; 
+                background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+                border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                border: 1px solid #e9ecef;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h1 style="color: #2c3e50; font-size: 2rem; margin-bottom: 0.5rem;">🏥 OASI Research</h1>
+            <h3 style="color: #7f8c8d; font-weight: 400;">Secure Access Portal</h3>
+            <div style="width: 60px; height: 3px; background: linear-gradient(90deg, #3498db, #9b59b6); margin: 1rem auto;"></div>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Login form
+    with st.form("login_form"):
+        st.markdown("#### 🔐 Please enter your credentials")
+        
+        username = st.text_input("Username", key="username", placeholder="Enter your username")
+        password = st.text_input("Password", type="password", key="password", placeholder="Enter your password")
+        
+        login_button = st.form_submit_button("🚀 Access Dashboard", on_click=password_entered)
+        
+        if login_button:
+            if st.session_state.get("password_correct", False):
+                st.success("✅ Authentication successful! Welcome to the OASI Research Dashboard.")
+                st.rerun()
+            else:
+                st.error("❌ Invalid username or password. Please try again.")
+    
+    # Information box
+    st.markdown("""
+    <div style="margin-top: 2rem; padding: 1rem; background: #e8f4fd; 
+                border-radius: 10px; border-left: 4px solid #3498db;">
+        <h4 style="color: #2c3e50; margin-bottom: 0.5rem;">📋 Access Information</h4>
+        <p style="color: #34495e; margin-bottom: 0;">This dashboard contains sensitive medical research data. 
+        Access is restricted to authorized personnel only.</p>
+        <br>
+        <p style="color: #7f8c8d; font-size: 0.9rem; margin-bottom: 0;">
+        <strong>Available Accounts:</strong><br>
+        • researcher / oasi2024research<br>
+        • clinician / medical2024<br>
+        • admin / admin2024oasi<br>
+        • indranil / indranil2024
+        </p>
+    </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    return False
 
 @st.cache_data
 def load_and_process_data():
@@ -373,29 +449,54 @@ def load_and_process_data():
     return df3, df4
 
 def main():
-    # Academic header with institutional styling
-    st.markdown("""
-    <div style="text-align: center; margin-bottom: 3rem;">
-        <h1 class="main-header">🏥 OASI Research Dashboard</h1>
-        <p style="font-size: 1.4rem; color: #34495e; font-weight: 500; margin-bottom: 0.5rem;">
-            Obstetric Anal Sphincter Injuries: Comprehensive Statistical Analysis
-        </p>
-        <p style="font-size: 1rem; color: #7f8c8d; font-style: italic;">
-            Interactive Dashboard for 3C and 4th Degree Tear Outcomes Research
-        </p>
-        <div style="width: 100px; height: 3px; background: linear-gradient(90deg, #3498db, #9b59b6); margin: 1rem auto;"></div>
-    </div>
-    """, unsafe_allow_html=True)
+    # Check authentication first
+    if not check_password():
+        return
+    
+    # Welcome message for authenticated users
+    current_user = st.session_state.get("current_user", "User")
+    
+    # Header with user info
+    col1, col2 = st.columns([4, 1])
+    with col1:
+        st.markdown("""
+        <div style="margin-bottom: 2rem;">
+            <h1 class="main-header">🏥 OASI Research Dashboard</h1>
+            <p style="font-size: 1.4rem; color: #34495e; font-weight: 500; margin-bottom: 0.5rem; text-align: center;">
+                Obstetric Anal Sphincter Injuries: Comprehensive Statistical Analysis
+            </p>
+            <p style="font-size: 1rem; color: #7f8c8d; font-style: italic; text-align: center;">
+                Interactive Dashboard for 3C and 4th Degree Tear Outcomes Research
+            </p>
+            <div style="width: 100px; height: 3px; background: linear-gradient(90deg, #3498db, #9b59b6); margin: 1rem auto;"></div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown(f"""
+        <div style="text-align: right; padding: 1rem; margin-top: 1rem;">
+            <p style="color: #7f8c8d; font-size: 0.9rem; margin-bottom: 0.5rem;">Logged in as:</p>
+            <p style="color: #2c3e50; font-weight: 600; margin-bottom: 0.5rem;">👤 {current_user}</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🚪 Logout", key="logout_button"):
+            for key in st.session_state.keys():
+                del st.session_state[key]
+            st.rerun()
     
     # Load data
     with st.spinner('Loading data...'):
         df3, df4 = load_and_process_data()
     
-    # Enhanced sidebar with academic styling
-    st.sidebar.markdown("""
-    <div style="text-align: center; padding: 1rem; margin-bottom: 2rem;">
-        <h2 style="color: #2c3e50; font-weight: 600; margin-bottom: 0.5rem;">📊 Research Navigation</h2>
-        <p style="color: #7f8c8d; font-size: 0.9rem;">Select analysis section</p>
+    # Enhanced sidebar with user info and navigation
+    st.sidebar.markdown(f"""
+    <div style="text-align: center; padding: 1rem; margin-bottom: 2rem; 
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 15px; color: white;">
+        <h2 style="color: white; font-weight: 600; margin-bottom: 0.5rem;">📊 Research Navigation</h2>
+        <p style="color: #ecf0f1; font-size: 0.9rem;">Welcome, {current_user.title()}</p>
+        <p style="color: #bdc3c7; font-size: 0.8rem;">Select analysis section below</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -450,6 +551,21 @@ def main():
             show_part3_3c_vs_4th(df3, df4)
         elif page == "D-F: Repair Type Comparisons":
             show_part3_repair_comparisons(df4)
+    
+    # Sidebar footer with logout and info
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("""
+    <div style="text-align: center; padding: 1rem; 
+                background: #f8f9fa; border-radius: 10px; margin-top: 2rem;">
+        <p style="color: #7f8c8d; font-size: 0.8rem; margin-bottom: 0.5rem;">OASI Research Dashboard v1.0</p>
+        <p style="color: #95a5a6; font-size: 0.7rem;">Secure medical research platform</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.sidebar.button("🚪 Secure Logout", key="sidebar_logout"):
+        for key in st.session_state.keys():
+            del st.session_state[key]
+        st.rerun()
 
 def show_overview(df3, df4):
     st.markdown('<h2 class="section-header">🏥 OASI Research Study Overview</h2>', unsafe_allow_html=True)
