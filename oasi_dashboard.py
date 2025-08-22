@@ -20,34 +20,126 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for better styling
+# Advanced CSS for academic styling
 st.markdown("""
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    .main {
+        font-family: 'Inter', sans-serif;
+    }
+    
     .main-header {
-        font-size: 2.5rem;
-        color: #1f77b4;
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         text-align: center;
         margin-bottom: 2rem;
+        letter-spacing: -0.02em;
     }
+    
     .section-header {
-        font-size: 1.8rem;
+        font-size: 2rem;
+        font-weight: 600;
         color: #2c3e50;
-        border-bottom: 2px solid #3498db;
+        border-bottom: 3px solid;
+        border-image: linear-gradient(90deg, #3498db, #9b59b6) 1;
         padding-bottom: 0.5rem;
+        margin: 2rem 0 1.5rem 0;
+        letter-spacing: -0.01em;
+    }
+    
+    .academic-card {
+        background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border: 1px solid #e9ecef;
         margin: 1.5rem 0;
     }
-    .metric-container {
-        background-color: #f8f9fa;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        border-left: 4px solid #3498db;
+    
+    .metric-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        margin: 0.5rem 0;
     }
-    .highlight-box {
-        background-color: #e8f4fd;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        border: 1px solid #3498db;
+    
+    .finding-box {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 12px;
         margin: 1rem 0;
+        box-shadow: 0 8px 25px rgba(240, 147, 251, 0.3);
+    }
+    
+    .method-box {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 1rem 0;
+        box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
+    }
+    
+    .interpretation-box {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        color: #2c3e50;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 1rem 0;
+        box-shadow: 0 8px 25px rgba(67, 233, 123, 0.3);
+        font-weight: 500;
+    }
+    
+    .sidebar .sidebar-content {
+        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .stSelectbox > div > div {
+        background-color: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+    }
+    
+    .stDataFrame {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .research-question {
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border-left: 5px solid #e67e22;
+        margin: 1rem 0;
+        font-style: italic;
+        font-weight: 500;
+    }
+    
+    .significance-badge {
+        background: #27ae60;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    
+    .non-significance-badge {
+        background: #95a5a6;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -281,15 +373,31 @@ def load_and_process_data():
     return df3, df4
 
 def main():
-    st.markdown('<h1 class="main-header">🏥 OASI Research Dashboard</h1>', unsafe_allow_html=True)
-    st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #7f8c8d;">Interactive Analysis of 3C and 4th Degree Tear Outcomes</p>', unsafe_allow_html=True)
+    # Academic header with institutional styling
+    st.markdown("""
+    <div style="text-align: center; margin-bottom: 3rem;">
+        <h1 class="main-header">🏥 OASI Research Dashboard</h1>
+        <p style="font-size: 1.4rem; color: #34495e; font-weight: 500; margin-bottom: 0.5rem;">
+            Obstetric Anal Sphincter Injuries: Comprehensive Statistical Analysis
+        </p>
+        <p style="font-size: 1rem; color: #7f8c8d; font-style: italic;">
+            Interactive Dashboard for 3C and 4th Degree Tear Outcomes Research
+        </p>
+        <div style="width: 100px; height: 3px; background: linear-gradient(90deg, #3498db, #9b59b6); margin: 1rem auto;"></div>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Load data
     with st.spinner('Loading data...'):
         df3, df4 = load_and_process_data()
     
-    # Sidebar navigation
-    st.sidebar.title("📊 Navigation")
+    # Enhanced sidebar with academic styling
+    st.sidebar.markdown("""
+    <div style="text-align: center; padding: 1rem; margin-bottom: 2rem;">
+        <h2 style="color: #2c3e50; font-weight: 600; margin-bottom: 0.5rem;">📊 Research Navigation</h2>
+        <p style="color: #7f8c8d; font-size: 0.9rem;">Select analysis section</p>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Main sections
     section = st.sidebar.selectbox(
@@ -306,7 +414,7 @@ def main():
     elif section == "🔬 Part II: Analytical Statistics":
         page = st.sidebar.selectbox(
             "Select Analysis:",
-            ["Q1: General Complications", "Q2: Bowel Issues", "Q3-4: Urinary Issues", "Q5: Vaginal Issues"]
+            ["Q1: Future Complications Risk Factors", "Q2: Bowel Issues Risk Factors", "Q3-4: Urinary Issues Risk Factors", "Q5: Vaginal Issues Risk Factors"]
         )
     elif section == "⚖️ Part III: Comparative Statistics":
         page = st.sidebar.selectbox(
@@ -329,13 +437,13 @@ def main():
         elif page == "Q16-18: Complications":
             show_part1_complications(df3, df4)
     elif section == "🔬 Part II: Analytical Statistics":
-        if page == "Q1: General Complications":
+        if page == "Q1: Future Complications Risk Factors":
             show_part2_general(df4)
-        elif page == "Q2: Bowel Issues":
+        elif page == "Q2: Bowel Issues Risk Factors":
             show_part2_bowel(df4)
-        elif page == "Q3-4: Urinary Issues":
+        elif page == "Q3-4: Urinary Issues Risk Factors":
             show_part2_urinary(df4)
-        elif page == "Q5: Vaginal Issues":
+        elif page == "Q5: Vaginal Issues Risk Factors":
             show_part2_vaginal(df4)
     elif section == "⚖️ Part III: Comparative Statistics":
         if page == "A-C: 3C vs 4th Degree":
@@ -510,10 +618,10 @@ def show_overview(df3, df4):
     with nav_col2:
         st.markdown("""
         **🔬 Part II: Analytical Statistics**
-        - Q1: General Complications
-        - Q2: Bowel Issues
-        - Q3-4: Urinary Issues
-        - Q5: Vaginal Issues
+        - Q1: Future Complications Risk Factors
+        - Q2: Bowel Issues Risk Factors  
+        - Q3-4: Urinary Issues Risk Factors
+        - Q5: Vaginal Issues Risk Factors
         """)
     
     with nav_col3:
@@ -524,6 +632,24 @@ def show_overview(df3, df4):
         """)
     
     st.info("💡 **Tip**: Use the sidebar to navigate between different sections and download CSV files for any table you see!")
+    
+    # Academic footer
+    st.markdown("---")
+    st.markdown("""
+    <div class="academic-card">
+        <h4>📚 Methodology & References</h4>
+        <p><strong>Statistical Software:</strong> Python 3.12, pandas, statsmodels, scipy</p>
+        <p><strong>Visualization:</strong> Plotly, Streamlit</p>
+        <p><strong>Statistical Methods:</strong></p>
+        <ul>
+            <li>Multivariable logistic regression with likelihood ratio testing</li>
+            <li>Chi-squared and Fisher's exact tests for categorical comparisons</li>
+            <li>Odds ratios with 95% confidence intervals</li>
+            <li>Ridge regularization for model stability when appropriate</li>
+        </ul>
+        <p><em>Dashboard created for academic research purposes. All statistical analyses follow standard epidemiological methods.</em></p>
+    </div>
+    """, unsafe_allow_html=True)
 
 def show_demographics(df3, df4):
     st.markdown('<h2 class="section-header">Demographics Analysis</h2>', unsafe_allow_html=True)
@@ -680,7 +806,8 @@ def create_comparison_chart(df3, df4, column, title, xlabel):
         label="📥 Download Comparison Data CSV",
         data=csv_data,
         file_name=f"{title.replace(' ', '_').replace(':', '').lower()}_comparison.csv",
-        mime="text/csv"
+        mime="text/csv",
+        key=f"download_comparison_{title.replace(' ', '_').replace(':', '').lower()}"
     )
 
 def show_complications(df3, df4):
@@ -1064,40 +1191,66 @@ def create_forest_plot(model_results):
     
     fig.update_layout(
         title={
-            'text': "Forest Plot - Odds Ratios with 95% Confidence Intervals",
+            'text': "Forest Plot: Multivariable Risk Factor Analysis",
             'x': 0.5,
             'xanchor': 'center',
-            'font': {'size': 16, 'color': '#2c3e50'}
+            'font': {'size': 18, 'color': '#2c3e50', 'family': 'Inter'}
         },
-        xaxis_title="Odds Ratio (log scale)",
-        yaxis_title="Risk Factors",
-        height=max(400, len(valid_data) * 40 + 100),
+        xaxis_title={
+            'text': "Odds Ratio (95% Confidence Interval)",
+            'font': {'size': 14, 'color': '#34495e'}
+        },
+        yaxis_title={
+            'text': "Risk Factors",
+            'font': {'size': 14, 'color': '#34495e'}
+        },
+        height=max(500, len(valid_data) * 50 + 150),
         showlegend=False,
         xaxis=dict(
             type="log",
-            gridcolor='lightgray',
-            gridwidth=1
+            gridcolor='#ecf0f1',
+            gridwidth=1,
+            showgrid=True,
+            zeroline=False,
+            tickfont=dict(size=12, color='#2c3e50')
         ),
         yaxis=dict(
-            gridcolor='lightgray',
-            gridwidth=1
+            gridcolor='#ecf0f1',
+            gridwidth=1,
+            showgrid=True,
+            tickfont=dict(size=12, color='#2c3e50')
         ),
         plot_bgcolor='white',
-        margin=dict(l=200, r=50, t=80, b=50)
+        paper_bgcolor='white',
+        margin=dict(l=250, r=80, t=100, b=80),
+        font=dict(family='Inter', size=12, color='#2c3e50')
     )
     
     st.plotly_chart(fig, use_container_width=True)
     
-    # Add interpretation guide
-    with st.expander("📖 How to interpret this forest plot"):
+    # Academic interpretation guide
+    with st.expander("📖 Statistical Interpretation Guide"):
         st.markdown("""
-        - **Red dots**: Statistically significant associations (p < 0.05)
-        - **Blue dots**: Non-significant associations (p ≥ 0.05)
-        - **Horizontal lines**: 95% confidence intervals
-        - **Vertical dashed line**: No effect (OR = 1.0)
-        - **Left of line**: Protective factor (OR < 1)
-        - **Right of line**: Risk factor (OR > 1)
-        """)
+        <div class="method-box">
+            <h4>Forest Plot Reading Guide</h4>
+            <ul>
+                <li><strong style="color: #e74c3c;">Red markers</strong>: Statistically significant associations (p < 0.05)</li>
+                <li><strong style="color: #3498db;">Blue markers</strong>: Non-significant associations (p ≥ 0.05)</li>
+                <li><strong>Horizontal error bars</strong>: 95% confidence intervals</li>
+                <li><strong>Vertical reference line</strong>: No effect (OR = 1.0)</li>
+                <li><strong>Left of reference</strong>: Protective factors (OR < 1.0)</li>
+                <li><strong>Right of reference</strong>: Risk factors (OR > 1.0)</li>
+            </ul>
+            
+            <h4>Clinical Interpretation</h4>
+            <p>Odds ratios represent the relative odds of developing complications. For example:</p>
+            <ul>
+                <li>OR = 2.0 means twice the odds of complications</li>
+                <li>OR = 0.5 means half the odds of complications</li>
+                <li>Confidence intervals crossing 1.0 indicate non-significance</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
     
     # Download forest plot data
     forest_csv = valid_data[['Predictor', 'OR', 'CI_lower', 'CI_upper', 'p_value']].to_csv(index=False)
@@ -1105,7 +1258,8 @@ def create_forest_plot(model_results):
         label="📥 Download Forest Plot Data CSV",
         data=forest_csv,
         file_name="forest_plot_data.csv",
-        mime="text/csv"
+        mime="text/csv",
+        key=f"download_forest_{hash(str(valid_data['Predictor'].tolist()))}"
     )
 
 def show_comparative_stats(df4):
@@ -1225,7 +1379,8 @@ def create_comparison_visualization(df_comp, comp_var, comp_name):
         label="📥 Download Contingency Table CSV",
         data=contingency_csv,
         file_name=f"{selected_comparison.replace(' ', '_').lower()}_contingency_table.csv",
-        mime="text/csv"
+        mime="text/csv",
+        key=f"download_contingency_{selected_comparison.replace(' ', '_').lower()}"
     )
 
 # =============================================================================
@@ -1298,7 +1453,8 @@ def show_part1_delivery_repair(df3, df4):
             label="📥 Download MOD Distribution CSV",
             data=csv_data,
             file_name="mode_of_delivery_distribution.csv",
-            mime="text/csv"
+            mime="text/csv",
+            key="download_mod_distribution"
         )
         
     elif question == "Q8: Previous 3rd Degree Tear":
@@ -1396,7 +1552,8 @@ def show_part1_complications(df3, df4):
             label="📥 Download Complication Types CSV",
             data=comp_csv,
             file_name="complication_types_distribution.csv",
-            mime="text/csv"
+            mime="text/csv",
+            key="download_complication_types"
         )
 
 # =============================================================================
@@ -1404,12 +1561,21 @@ def show_part1_complications(df3, df4):
 # =============================================================================
 
 def show_part2_general(df4):
-    st.markdown('<h2 class="section-header">Part II: Q1 - General Complications Analysis</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Part II: Q1 - Future Complications Risk Factors</h2>', unsafe_allow_html=True)
     
-    st.markdown("""
-    #### Research Question:
-    Any relationship between maternal age, parity, ethnicity, baby birthweight, absence of episiotomy, 
-    type of repair and mode of delivery for having a future complication after 4th degree tear?
+    # Research question with clean formatting
+    st.info("""
+    🎯 **Research Question 1:**
+    
+    **Objective:** Identify relationships between maternal age, parity, ethnicity, baby birthweight, 
+    absence of episiotomy, type of repair and mode of delivery for having future complications after 3C and 4th degree tears.
+    
+    **Methodology:** Multivariable logistic regression with univariate and multivariate analysis. 
+    Complications treated as binary outcome (Yes/No). Likelihood ratio testing used for model comparison.
+    
+    **Hypothesis:** Certain maternal and clinical factors may predict increased risk of complications following OASI repair.
+    
+    **Note:** Analysis limited to 4th degree tears due to data availability in the 3C dataset.
     """)
     
     # Run and display regression
@@ -1435,7 +1601,8 @@ def show_part2_general(df4):
             label="📥 Download Odds Ratios CSV",
             data=or_csv,
             file_name="general_complications_odds_ratios.csv",
-            mime="text/csv"
+            mime="text/csv",
+            key="download_general_complications_or"
         )
         
         # Forest plot
@@ -1443,12 +1610,21 @@ def show_part2_general(df4):
         create_forest_plot(model_results)
 
 def show_part2_bowel(df4):
-    st.markdown('<h2 class="section-header">Part II: Q2 - Bowel Issues Analysis</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Part II: Q2 - Bowel Issues Risk Factors</h2>', unsafe_allow_html=True)
     
-    st.markdown("""
-    #### Research Question:
-    Any relationship between maternal age, parity, ethnicity, baby birthweight, absence of episiotomy, 
-    type of repair and mode of delivery for having immediate and late bowel issues?
+    # Research question with clean formatting
+    st.info("""
+    🎯 **Research Question 2:**
+    
+    **Objective:** Determine relationships between maternal age, parity, ethnicity, baby birthweight, 
+    absence of episiotomy, type of repair and mode of delivery for having immediate and late bowel issues.
+    
+    **Outcome Definition:** Any bowel complication including faecal incontinence, flatus incontinence, 
+    urgency of stool, or inability to defer bowels (Y in any one of these problems).
+    
+    **Methodology:** Separate multivariable logistic regression models for immediate and long-term outcomes.
+    
+    **Clinical Relevance:** Bowel dysfunction is a major concern following OASI repair, affecting quality of life.
     """)
     
     # Tabs for immediate vs long-term
@@ -1465,12 +1641,23 @@ def show_part2_bowel(df4):
             display_regression_results(model_results, "Long-term Bowel Issues")
 
 def show_part2_urinary(df4):
-    st.markdown('<h2 class="section-header">Part II: Q3-4 - Urinary Issues Analysis</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Part II: Q3-4 - Urinary Issues Risk Factors</h2>', unsafe_allow_html=True)
     
-    st.markdown("""
-    #### Research Question:
-    Any relationship between maternal age, parity, ethnicity, baby birthweight, absence of episiotomy, 
-    type of repair and mode of delivery for having immediate and late urinary issues?
+    # Research question with clean formatting
+    st.info("""
+    🎯 **Research Questions 3 & 4:**
+    
+    **Objective:** Investigate relationships between maternal age, parity, ethnicity, baby birthweight, 
+    absence of episiotomy, type of repair and mode of delivery for having immediate and late urinary issues.
+    
+    **Outcome Definition:** Any urinary complication including urgency, frequency, leakage, 
+    leakage on strenuous activity, or voiding dysfunction (Y in any one of these problems).
+    
+    **Methodology:** Separate multivariable logistic regression models for immediate and long-term outcomes.
+    
+    **Clinical Relevance:** Urinary dysfunction can significantly impact women's daily activities and quality of life post-OASI.
+    
+    **Note:** Questions 3 and 4 are identical in the original protocol, so analyzed together.
     """)
     
     # Tabs for immediate vs long-term
@@ -1487,12 +1674,24 @@ def show_part2_urinary(df4):
             display_regression_results(model_results, "Long-term Urinary Issues")
 
 def show_part2_vaginal(df4):
-    st.markdown('<h2 class="section-header">Part II: Q5 - Vaginal Issues Analysis</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Part II: Q5 - Vaginal Issues Risk Factors</h2>', unsafe_allow_html=True)
     
-    st.markdown("""
-    #### Research Question:
-    Any relationship between maternal age, parity, ethnicity, baby birthweight, absence of episiotomy, 
-    type of repair and mode of delivery for having immediate and late vaginal issues?
+    # Research question with clean formatting
+    st.info("""
+    🎯 **Research Question 5:**
+    
+    **Objective:** Examine relationships between maternal age, parity, ethnicity, baby birthweight, 
+    absence of episiotomy, type of repair and mode of delivery for having immediate and late vaginal issues.
+    
+    **Outcome Definition:** Any vaginal complication including body image issues, dyspareunia, 
+    or vaginal lump (Y in any one of these problems).
+    
+    **Methodology:** Separate multivariable logistic regression models for immediate and long-term outcomes.
+    
+    **Clinical Relevance:** Vaginal complications, particularly dyspareunia, can significantly affect 
+    intimate relationships and psychological well-being.
+    
+    **Special Consideration:** Some models may require regularization due to sparse data in certain categories.
     """)
     
     # Tabs for immediate vs long-term
@@ -1517,60 +1716,170 @@ def show_part2_vaginal(df4):
 def show_part3_3c_vs_4th(df3, df4):
     st.markdown('<h2 class="section-header">Part III: Questions A-C - 3C vs 4th Degree Comparison</h2>', unsafe_allow_html=True)
     
-    st.warning("""
+    # Research questions overview
+    st.info("""
+    🎯 **Research Questions A, B, C:**
+    
+    **A.** Any significant difference between the rate of immediate and late bowel complications between 3C and 4th degree tears?
+    
+    **B.** Any significant difference between the rate of immediate and late urinary complications between 3C and 4th degree tears?
+    
+    **C.** Any significant difference between the rate of immediate and late vaginal complications between 3C and 4th degree tears?
+    """)
+    
+    # Data limitation explanation
+    st.error("""
     ⚠️ **Data Limitation Notice**
     
     Questions A, B, and C cannot be answered directly because:
-    - The 3C tear dataset (df3) does not contain detailed immediate/late complication data
-    - Only the 4th degree tear dataset (df4) has the specific bowel, urinary, and vaginal issue columns
+    - The 3C tear dataset does not contain detailed immediate/late complication data
+    - Only the 4th degree tear dataset has the specific bowel, urinary, and vaginal issue columns
     
-    **Available Comparisons:**
-    - General demographics (age, parity, ethnicity, BMI)
-    - Repair techniques
-    - Follow-up rates
+    **Alternative Analysis Available:** General demographic and clinical factor comparisons
     """)
     
-    # Show available demographic comparisons
-    st.markdown("### Available Demographic Comparisons")
+    # Available comparisons with enhanced presentation
+    st.markdown("### 📊 Available Demographic & Clinical Comparisons")
     
-    comparison_type = st.selectbox(
-        "Select comparison:",
-        ["Age Distribution", "Parity Distribution", "BMI Distribution", "Repair Type Distribution"]
-    )
+    # Create tabs for different comparison types
+    tab1, tab2, tab3, tab4 = st.tabs(["👥 Demographics", "🏥 Clinical Factors", "📈 Summary Statistics", "📋 Data Quality"])
     
-    if comparison_type == "Age Distribution":
-        create_comparison_chart(df3, df4, 'Age_Group', 'Age Distribution Comparison', 'Age Group')
-    elif comparison_type == "Parity Distribution":
-        create_comparison_chart(df3, df4, 'Parity_Group_v2', 'Parity Distribution Comparison', 'Parity Group')
-    elif comparison_type == "BMI Distribution":
-        create_comparison_chart(df3, df4, 'BMI_Group', 'BMI Distribution Comparison', 'BMI Category')
-    elif comparison_type == "Repair Type Distribution":
-        create_comparison_chart(df3, df4, 'Repair_Type', 'Repair Type Distribution Comparison', 'Repair Type')
+    with tab1:
+        st.markdown("#### Demographic Characteristics Comparison")
+        comparison_type = st.selectbox(
+            "Select demographic variable:",
+            ["Age Distribution", "Parity Distribution", "BMI Distribution", "Ethnicity Distribution"],
+            key="demo_comparison"
+        )
+        
+        if comparison_type == "Age Distribution":
+            create_comparison_chart(df3, df4, 'Age_Group', 'Age Distribution: 3C vs 4th Degree Tears', 'Age Group')
+        elif comparison_type == "Parity Distribution":
+            create_comparison_chart(df3, df4, 'Parity_Group_v2', 'Parity Distribution: 3C vs 4th Degree Tears', 'Parity Group')
+        elif comparison_type == "BMI Distribution":
+            create_comparison_chart(df3, df4, 'BMI_Group', 'BMI Distribution: 3C vs 4th Degree Tears', 'BMI Category')
+        elif comparison_type == "Ethnicity Distribution":
+            create_comparison_chart(df3, df4, 'EthnicOrigin_cat', 'Ethnicity Distribution: 3C vs 4th Degree Tears', 'Ethnic Group')
+    
+    with tab2:
+        st.markdown("#### Clinical Factors Comparison")
+        clinical_comparison = st.selectbox(
+            "Select clinical variable:",
+            ["Repair Type Distribution", "Previous OASI History", "Treatment Patterns"],
+            key="clinical_comparison"
+        )
+        
+        if clinical_comparison == "Repair Type Distribution":
+            create_comparison_chart(df3, df4, 'Repair_Type', 'Repair Type: 3C vs 4th Degree Tears', 'Repair Type')
+        elif clinical_comparison == "Previous OASI History":
+            # Previous OASI comparison
+            prev_3c_rate = (df3['Prev_OASI_Flag'] == 'Yes').sum() / df3['Prev_OASI_Flag'].notna().sum() * 100
+            prev_4th_rate = (df4['Prev_OASI_Flag'] == 'Yes').sum() / df4['Prev_OASI_Flag'].notna().sum() * 100
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.metric("3C Tears", f"{prev_3c_rate:.1f}%", help="Rate of previous OASI")
+            with col2:
+                st.metric("4th Degree Tears", f"{prev_4th_rate:.1f}%", help="Rate of previous OASI")
+                
+        elif clinical_comparison == "Treatment Patterns":
+            # Treatment comparison
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown("**3C Tears Treatment:**")
+                lax_3c = (df3['Q12_Lax'] == 'Yes').sum() / len(df3) * 100
+                abx_3c = (df3['Q13_Abx'] == 'Yes').sum() / len(df3) * 100
+                st.write(f"- Laxatives: {lax_3c:.1f}%")
+                st.write(f"- Antibiotics: {abx_3c:.1f}%")
+            
+            with col2:
+                st.markdown("**4th Degree Tears Treatment:**")
+                lax_4th = (df4['Q12_Lax'] == 'Yes').sum() / len(df4) * 100
+                abx_4th = (df4['Q13_Abx'] == 'Yes').sum() / len(df4) * 100
+                st.write(f"- Laxatives: {lax_4th:.1f}%")
+                st.write(f"- Antibiotics: {abx_4th:.1f}%")
+    
+    with tab3:
+        st.markdown("#### Summary Statistics Comparison")
+        
+        # Create comprehensive summary table
+        summary_data = {
+            'Characteristic': ['Sample Size', 'Mean Age (years)', 'Mean BMI (kg/m²)', 'Primigravida (%)', 'Overlapping Repair (%)'],
+            '3C Tears': [
+                len(df3),
+                f"{df3['Age_at_deliveryDate'].mean():.1f}",
+                f"{df3['bmi'].mean():.1f}",
+                f"{(df3['Parity_Group_v2'] == '<1').mean()*100:.1f}%",
+                f"{(df3['Repair_Type'] == 'Overlapping').mean()*100:.1f}%"
+            ],
+            '4th Degree Tears': [
+                len(df4),
+                f"{df4['Age_at_deliveryDate'].mean():.1f}",
+                f"{df4['bmi'].mean():.1f}",
+                f"{(df4['Parity_Group_v2'] == '<1').mean()*100:.1f}%",
+                f"{(df4['Repair_Type'] == 'Overlapping').mean()*100:.1f}%"
+            ]
+        }
+        
+        summary_df = pd.DataFrame(summary_data)
+        st.dataframe(summary_df, use_container_width=True)
+        
+        # Download summary
+        summary_csv = summary_df.to_csv(index=False)
+        st.download_button(
+            label="📥 Download Summary Comparison CSV",
+            data=summary_csv,
+            file_name="3c_vs_4th_degree_summary.csv",
+            mime="text/csv",
+            key="download_3c_4th_summary"
+        )
+    
+    with tab4:
+        st.markdown("#### Data Completeness Assessment")
+        
+        # Data quality metrics
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("**3C Tears Data Quality:**")
+            st.write(f"- Total records: {len(df3)}")
+            st.write(f"- Age missing: {df3['Age_at_deliveryDate'].isna().sum()} ({df3['Age_at_deliveryDate'].isna().mean()*100:.1f}%)")
+            st.write(f"- BMI missing: {df3['bmi'].isna().sum()} ({df3['bmi'].isna().mean()*100:.1f}%)")
+            st.write(f"- Mode of delivery missing: {(df3['MOD_ALL'] == 'MISSING').sum()} ({(df3['MOD_ALL'] == 'MISSING').mean()*100:.1f}%)")
+        
+        with col2:
+            st.markdown("**4th Degree Tears Data Quality:**")
+            st.write(f"- Total records: {len(df4)}")
+            st.write(f"- Age missing: {df4['Age_at_deliveryDate'].isna().sum()} ({df4['Age_at_deliveryDate'].isna().mean()*100:.1f}%)")
+            st.write(f"- BMI missing: {df4['bmi'].isna().sum()} ({df4['bmi'].isna().mean()*100:.1f}%)")
+            st.write(f"- Mode of delivery missing: {(df4['MOD_ALL'] == 'MISSING').sum()} ({(df4['MOD_ALL'] == 'MISSING').mean()*100:.1f}%)")
 
 def show_part3_repair_comparisons(df4):
     st.markdown('<h2 class="section-header">Part III: Questions D-F - Repair Type Comparisons</h2>', unsafe_allow_html=True)
     
-    st.markdown("""
-    #### Research Questions:
-    - **D**: Significant difference in bowel complications between end-to-end vs overlapping repair?
-    - **E**: Significant difference in urinary complications between end-to-end vs overlapping repair?
-    - **F**: Significant difference in vaginal complications between end-to-end vs overlapping repair?
+    # Research questions with enhanced presentation
+    st.info("""
+    🎯 **Research Questions D, E, F:**
+    
+    **D.** Any significant difference between the rate of immediate and late bowel complications between tears repaired with end-to-end vs overlapping?
+    
+    **E.** Any significant difference between the rate of immediate and late urinary complications between tears repaired with end-to-end vs overlapping?
+    
+    **F.** Any significant difference between the rate of immediate and late vaginal complications between tears repaired with end-to-end vs overlapping?
+    
+    **Methodology:** Chi-squared tests and Fisher's exact tests for categorical comparisons between repair techniques.
     """)
+    
+    # Enhanced analysis with organized tabs
+    st.markdown("### 🔬 Statistical Analysis Results")
+    
+    # Create tabs for each question group
+    tab_d, tab_e, tab_f, tab_summary = st.tabs(["🔴 Question D: Bowel", "🔵 Question E: Urinary", "🟡 Question F: Vaginal", "📊 Summary Results"])
     
     # Filter to main repair types
     df_comp = df4[df4['Repair_Type'].isin(['Overlapping', 'End to end'])].copy()
     
-    # Create comprehensive comparison table
-    comparisons = {
-        "D1: Immediate Bowel": "Any_Bowel_Immediate",
-        "D2: Long-term Bowel": "Any_Bowel_Late",
-        "E1: Immediate Urinary": "Any_Urinary_Immediate", 
-        "E2: Long-term Urinary": "Any_Urinary_Late",
-        "F1: Immediate Vaginal": "Any_Vaginal_Immediate",
-        "F2: Long-term Vaginal": "Any_Vaginal_Late"
-    }
-    
-    # Recreate comparison flags for this section
+    # Recreate comparison flags
     def create_any_comp_flag(df, columns):
         df_numeric = df[columns].apply(lambda x: x.str.strip().str.upper() == 'Y').astype(int)
         return (df_numeric.sum(axis=1) > 0).astype(int)
@@ -1594,7 +1903,88 @@ def show_part3_repair_comparisons(df4):
     df_comp['Any_Vaginal_Immediate'] = create_any_comp_flag(df_comp, vaginal_imm)
     df_comp['Any_Vaginal_Late'] = create_any_comp_flag(df_comp, vaginal_lt)
     
-    # Run statistical tests and create results table
+    with tab_d:
+        st.markdown("#### Question D: Bowel Complications by Repair Type")
+        show_repair_comparison_analysis(df_comp, "Bowel", ["Any_Bowel_Immediate", "Any_Bowel_Late"])
+    
+    with tab_e:
+        st.markdown("#### Question E: Urinary Complications by Repair Type")
+        show_repair_comparison_analysis(df_comp, "Urinary", ["Any_Urinary_Immediate", "Any_Urinary_Late"])
+    
+    with tab_f:
+        st.markdown("#### Question F: Vaginal Complications by Repair Type")
+        show_repair_comparison_analysis(df_comp, "Vaginal", ["Any_Vaginal_Immediate", "Any_Vaginal_Late"])
+    
+    with tab_summary:
+        st.markdown("#### 📊 Complete Statistical Summary")
+        show_complete_repair_summary(df_comp)
+
+def show_repair_comparison_analysis(df_comp, complication_type, comp_vars):
+    """Show detailed analysis for one complication type."""
+    
+    st.markdown(f"**Analysis Focus:** {complication_type} complications comparing End-to-end vs Overlapping repair")
+    
+    # Create side-by-side comparison
+    col1, col2 = st.columns(2)
+    
+    for i, comp_var in enumerate(comp_vars):
+        period = "Immediate" if "Immediate" in comp_var else "Long-term"
+        
+        with col1 if i == 0 else col2:
+            st.markdown(f"##### {period} {complication_type} Issues")
+            
+            if comp_var in df_comp.columns:
+                # Calculate rates by repair type
+                rates_by_repair = df_comp.groupby('Repair_Type')[comp_var].agg(['count', 'sum', 'mean']).reset_index()
+                rates_by_repair['rate'] = rates_by_repair['mean'] * 100
+                
+                # Display metrics
+                overlapping_rate = rates_by_repair[rates_by_repair['Repair_Type'] == 'Overlapping']['rate'].iloc[0]
+                endtoend_rate = rates_by_repair[rates_by_repair['Repair_Type'] == 'End to end']['rate'].iloc[0]
+                
+                st.metric("Overlapping", f"{overlapping_rate:.1f}%")
+                st.metric("End-to-end", f"{endtoend_rate:.1f}%")
+                
+                # Statistical test
+                contingency = pd.crosstab(df_comp['Repair_Type'], df_comp[comp_var])
+                if contingency.shape == (2, 2):
+                    chi2_stat, chi2_p, _, expected = chi2_contingency(contingency)
+                    
+                    if (expected < 5).any():
+                        _, fisher_p = fisher_exact(contingency)
+                        test_used = "Fisher's Exact"
+                        p_value = fisher_p
+                    else:
+                        test_used = "Chi-squared"
+                        p_value = chi2_p
+                    
+                    # Display test results
+                    if p_value < 0.05:
+                        st.success(f"**Significant difference** (p = {p_value:.4f})")
+                    else:
+                        st.info(f"**No significant difference** (p = {p_value:.4f})")
+                    
+                    st.caption(f"Test used: {test_used}")
+    
+    # Visualization for this complication type
+    if len(comp_vars) == 2 and all(var in df_comp.columns for var in comp_vars):
+        create_repair_comparison_chart(df_comp, comp_vars, complication_type)
+
+def show_complete_repair_summary(df_comp):
+    """Show complete summary of all repair type comparisons."""
+    
+    st.markdown("**Complete Statistical Results: End-to-end vs Overlapping Repair**")
+    
+    # Define all comparisons
+    comparisons = {
+        "D1: Immediate Bowel": "Any_Bowel_Immediate",
+        "D2: Long-term Bowel": "Any_Bowel_Late",
+        "E1: Immediate Urinary": "Any_Urinary_Immediate", 
+        "E2: Long-term Urinary": "Any_Urinary_Late",
+        "F1: Immediate Vaginal": "Any_Vaginal_Immediate",
+        "F2: Long-term Vaginal": "Any_Vaginal_Late"
+    }
+    
     results_data = []
     
     for comp_name, comp_var in comparisons.items():
@@ -1619,39 +2009,97 @@ def show_part3_repair_comparisons(df4):
                 endtoend_rate = contingency.loc['End to end', 1] / contingency.loc['End to end'].sum() * 100
                 
                 results_data.append({
-                    'Question': comp_name,
+                    'Comparison': comp_name,
                     'Overlapping Rate': f"{overlapping_rate:.1f}%",
                     'End-to-end Rate': f"{endtoend_rate:.1f}%",
                     'Test Used': test_used,
                     'p-value': f"{p_value:.4f}",
-                    'Significant': "✓" if p_value < 0.05 else "✗"
+                    'Significant': "✓" if p_value < 0.05 else "✗",
+                    'Effect Size': f"{abs(overlapping_rate - endtoend_rate):.1f}% difference"
                 })
     
-    # Display results
+    # Display comprehensive results table
     if results_data:
         results_df = pd.DataFrame(results_data)
         
-        # Color code significant results
-        def highlight_significant(row):
+        # Enhanced styling for summary table
+        def style_summary_table(row):
             if row['Significant'] == '✓':
-                return ['background-color: #d4edda'] * len(row)
-            return [''] * len(row)
+                return ['background: linear-gradient(90deg, #d4edda, #c3e6cb); color: #155724; font-weight: 600'] * len(row)
+            return ['background: #f8f9fa; color: #2c3e50'] * len(row)
         
-        styled_results = results_df.style.apply(highlight_significant, axis=1)
+        styled_results = results_df.style.apply(style_summary_table, axis=1)
+        styled_results = styled_results.set_table_styles([
+            {'selector': 'th', 'props': [('background-color', '#34495e'), ('color', 'white'), ('font-weight', 'bold'), ('padding', '12px')]},
+            {'selector': 'td', 'props': [('padding', '10px'), ('border-bottom', '1px solid #dee2e6')]}
+        ])
+        
         st.dataframe(styled_results, use_container_width=True)
         
-        # Download button for comparative statistics
+        # Key findings summary
+        significant_count = (results_df['Significant'] == '✓').sum()
+        
+        if significant_count > 0:
+            st.success(f"🎯 **{significant_count}** out of **{len(results_df)}** comparisons showed statistically significant differences (p < 0.05)")
+            
+            # Show significant findings
+            sig_results = results_df[results_df['Significant'] == '✓']
+            if not sig_results.empty:
+                st.markdown("**Significant Findings:**")
+                for _, row in sig_results.iterrows():
+                    st.write(f"• **{row['Comparison']}**: {row['Effect Size']} (p = {row['p-value']})")
+        else:
+            st.info(f"📊 **No significant differences** found between repair types across all {len(results_df)} comparisons (all p ≥ 0.05)")
+        
+        # Download comprehensive results
         comp_csv = results_df.to_csv(index=False)
         st.download_button(
-            label="📥 Download Comparative Statistics CSV",
+            label="📥 Download Complete Repair Comparison Results CSV",
             data=comp_csv,
-            file_name="repair_type_comparisons.csv",
-            mime="text/csv"
+            file_name="complete_repair_type_comparisons.csv",
+            mime="text/csv",
+            key="download_complete_repair_stats"
+        )
+
+def create_repair_comparison_chart(df_comp, comp_vars, complication_type):
+    """Create visualization for repair type comparison."""
+    
+    # Prepare data for visualization
+    chart_data = []
+    
+    for comp_var in comp_vars:
+        period = "Immediate" if "Immediate" in comp_var else "Long-term"
+        rates_by_repair = df_comp.groupby('Repair_Type')[comp_var].mean() * 100
+        
+        for repair_type in ['Overlapping', 'End to end']:
+            if repair_type in rates_by_repair.index:
+                chart_data.append({
+                    'Repair Type': repair_type,
+                    'Period': period,
+                    'Complication Rate (%)': rates_by_repair[repair_type]
+                })
+    
+    if chart_data:
+        chart_df = pd.DataFrame(chart_data)
+        
+        fig = px.bar(
+            chart_df,
+            x='Period',
+            y='Complication Rate (%)',
+            color='Repair Type',
+            title=f'{complication_type} Complications: Immediate vs Long-term by Repair Type',
+            barmode='group',
+            color_discrete_map={'Overlapping': '#3498db', 'End to end': '#e74c3c'}
         )
         
-        # Summary
-        significant_count = (results_df['Significant'] == '✓').sum()
-        st.markdown(f"**Summary:** {significant_count} out of {len(results_df)} comparisons showed statistically significant differences (p < 0.05)")
+        fig.update_layout(
+            height=400,
+            font=dict(family='Inter', size=12),
+            plot_bgcolor='white',
+            paper_bgcolor='white'
+        )
+        
+        st.plotly_chart(fig, use_container_width=True)
 
 # =============================================================================
 # HELPER FUNCTIONS
@@ -1690,32 +2138,55 @@ def display_regression_results(model_results, title):
         st.info("📋 Regularized model used due to data limitations - standard fit metrics not available")
         st.metric("Sample Size", f"{model_results['n_obs']}")
     
-    # Enhanced odds ratios table
-    st.markdown("#### 🎯 Risk Factor Analysis")
+    # Academic-style results presentation
+    st.markdown('<div class="academic-card">', unsafe_allow_html=True)
+    st.markdown("#### 🎯 Multivariable Logistic Regression Results")
     
     or_df = model_results['odds_ratios'].copy()
     
-    # Add interpretation column
+    # Enhanced table with academic formatting
     if 'Significance' in or_df.columns:
-        # Color code the dataframe
-        def style_significance(row):
+        # Create a more sophisticated styling
+        def style_academic_table(row):
             if row['Significance'] == '✓':
-                return ['background-color: #d4edda; color: #155724'] * len(row)
-            return [''] * len(row)
+                return ['background: linear-gradient(90deg, #d4edda, #c3e6cb); color: #155724; font-weight: 600'] * len(row)
+            return ['background: #f8f9fa; color: #2c3e50'] * len(row)
         
-        styled_df = or_df.style.apply(style_significance, axis=1)
+        styled_df = or_df.style.apply(style_academic_table, axis=1)
+        styled_df = styled_df.set_table_styles([
+            {'selector': 'th', 'props': [('background-color', '#34495e'), ('color', 'white'), ('font-weight', 'bold')]},
+            {'selector': 'td', 'props': [('padding', '12px'), ('border-bottom', '1px solid #dee2e6')]}
+        ])
+        
         st.dataframe(styled_df, use_container_width=True)
         
-        # Summary of significant findings
+        # Academic findings summary
         significant_factors = or_df[or_df['Significance'] == '✓']
         if not significant_factors.empty:
-            st.success(f"🎯 **{len(significant_factors)} significant risk factors identified:**")
+            st.markdown("""
+            <div class="finding-box">
+                <h4>📊 Significant Associations Identified</h4>
+            """, unsafe_allow_html=True)
+            
             for _, row in significant_factors.iterrows():
-                st.write(f"• **{row['Predictor']}**: {row['OR (95% CI)']}")
+                or_val = float(row['OR (95% CI)'].split('(')[0].strip())
+                interpretation = "increased risk" if or_val > 1 else "protective effect"
+                st.markdown(f"<p><strong>{row['Predictor']}</strong>: {row['OR (95% CI)']} - {interpretation}</p>", unsafe_allow_html=True)
+            
+            st.markdown("</div>", unsafe_allow_html=True)
         else:
-            st.info("No statistically significant risk factors identified in this model")
+            st.markdown("""
+            <div class="interpretation-box">
+                <h4>📋 Statistical Interpretation</h4>
+                <p>No individual predictors reached statistical significance (p < 0.05) in this multivariable model. 
+                This suggests that complications may be influenced by factors not captured in this analysis or 
+                may occur relatively randomly across the measured characteristics.</p>
+            </div>
+            """, unsafe_allow_html=True)
     else:
         st.dataframe(or_df, use_container_width=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
     
     # Download button for this analysis
     or_csv = or_df.to_csv(index=False)
@@ -1723,7 +2194,8 @@ def display_regression_results(model_results, title):
         label=f"📥 Download {title} Results CSV",
         data=or_csv,
         file_name=f"{title.replace(' ', '_').replace('-', '_').lower()}_results.csv",
-        mime="text/csv"
+        mime="text/csv",
+        key=f"download_results_{title.replace(' ', '_').replace('-', '_').lower()}"
     )
     
     # Forest plot with enhanced styling
